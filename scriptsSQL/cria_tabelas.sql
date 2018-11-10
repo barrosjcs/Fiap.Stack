@@ -1,0 +1,43 @@
+
+--DROP TABLE PerguntaTag
+--DROP TABLE Resposta
+--DROP TABLE Pergunta
+--DROP TABLE Tag
+--DROP TABLE Usuario
+
+CREATE TABLE Usuario (
+	Codigo INT PRIMARY KEY IDENTITY,
+	Nome VARCHAR(20) NOT NULL,
+	Login VARCHAR(20) NOT NULL,
+	SenhaHash VARCHAR(MAX) NOT NULL,
+	Email VARCHAR(254) NOT NULL,
+)
+
+CREATE TABLE Tag (
+	Codigo INT PRIMARY KEY IDENTITY,
+	Descricao VARCHAR(20) NOT NULL
+)
+
+CREATE TABLE Pergunta (
+	Codigo INT PRIMARY KEY IDENTITY,
+	CodigoUsuario INT NOT NULL,
+	Descricao TEXT NOT NULL,
+	DataHoraCadastro DATETIME NOT NULL DEFAULT GETDATE()
+	FOREIGN KEY (CodigoUsuario) REFERENCES Usuario (Codigo) 
+)
+
+CREATE TABLE Resposta (
+	Codigo INT PRIMARY KEY IDENTITY,
+	CodigoPergunta INT NOT NULL,
+	Descricao TEXT NOT NULL,
+	Votos INT NOT NULL DEFAULT 0,
+	DataHoraCadastro DATETIME NOT NULL DEFAULT GETDATE() 
+	FOREIGN KEY (CodigoPergunta) REFERENCES Pergunta (Codigo) 
+)
+
+CREATE TABLE PerguntaTag (
+	CodigoPergunta INT NOT NULL,
+	CodigoTag INT NOT NULL,
+	PRIMARY KEY (CodigoPergunta, CodigoTag)
+)
+
