@@ -7,6 +7,7 @@ namespace Fiap.Stack.MOD
     {
         public int Codigo { get; set; }
         public int CodigoUsuario { get; set; }
+        public string Titulo { get; set; }
         public string Descricao { get; set; }
         public DateTime DataHoraCadastro  { get; set; }
 

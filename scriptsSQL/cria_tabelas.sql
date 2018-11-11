@@ -25,6 +25,7 @@ CREATE TABLE Tag (
 CREATE TABLE Pergunta (
 	Codigo INT PRIMARY KEY IDENTITY,
 	CodigoUsuario INT NOT NULL,
+	Titulo VARCHAR(254) NOT NULL,
 	Descricao TEXT NOT NULL,
 	DataHoraCadastro DATETIME NOT NULL DEFAULT GETDATE()
 	FOREIGN KEY (CodigoUsuario) REFERENCES Usuario (Codigo) 

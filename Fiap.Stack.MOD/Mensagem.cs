@@ -7,6 +7,7 @@
         public const string ValidacaoDescricaoTagObrigatoria = "Informe as tags.";
         public const string ValidacaoDescricaoPerguntaObrigatoria = "Informe a pergunta.";
         public const string ValidacaoDescricaoRespostaObrigatoria = "Informe a resposta.";
+        public const string ValidacaoTituloPerguntaObrigatoria = "Informe o título da pergunta.";
         public const string ValidacaoNomeUsuarioObrigatoria = "Informe o nome.";
         public const string ValidacaoLoginUsuarioObrigatoria = "Informe o usuário.";
         public const string ValidacaoSenhaUsuarioObrigatoria = "Informe a senha.";

@@ -11,6 +11,9 @@ namespace Fiap.Stack.Models
         public int CodigoUsuario { get; set; }
         public DateTime DataHoraCadastro  { get; set; }
 
+        [Required(ErrorMessage = Mensagem.ValidacaoTituloPerguntaObrigatoria)]
+        public string Titulo { get; set; }
+
         [Required(ErrorMessage = Mensagem.ValidacaoDescricaoPerguntaObrigatoria)]
         public string Descricao { get; set; }
 
@@ -23,6 +26,7 @@ namespace Fiap.Stack.Models
             {
                 Codigo = pergunta.Codigo,
                 CodigoUsuario = pergunta.CodigoUsuario,
+                Titulo = pergunta.Titulo,
                 Descricao = pergunta.Descricao
             };
         } 
