@@ -32,6 +32,8 @@ namespace Fiap.Stack
 
             services.AddTransient<IPerguntaDAL, PerguntaDAL>();
             services.AddTransient<IPerguntaBLL, PerguntaBLL>();
+            services.AddTransient<IRespostaDAL, RespostaDAL>();
+            services.AddTransient<IRespostaBLL, RespostaBLL>();
             services.AddTransient<ITagDAL, TagDAL>();
             services.AddTransient<ITagBLL, TagBLL>();
         }

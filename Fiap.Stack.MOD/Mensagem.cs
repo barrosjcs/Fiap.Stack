@@ -10,5 +10,6 @@ namespace Fiap.Stack.MOD
 
         public const string ValidacaoDescricaoTagObrigatoria = "Informe as tags.";
         public const string ValidacaoDescricaoPerguntaObrigatoria = "Informe a pergunta.";
+        public const string ValidacaoDescricaoRespostaObrigatoria = "Informe a resposta.";
     }
 }

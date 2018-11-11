@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -66,7 +65,7 @@ namespace Fiap.Stack.DAL
                                 	Pergunta.Descricao,
                                 	Pergunta.DataHoraCadastro,
                                 	Tag.Codigo,
-                                	TAG.Descricao
+                                	Tag.Descricao
                                 FROM
                                 	Pergunta
                                 	LEFT JOIN PerguntaTag ON Pergunta.Codigo = PerguntaTag.CodigoPergunta
