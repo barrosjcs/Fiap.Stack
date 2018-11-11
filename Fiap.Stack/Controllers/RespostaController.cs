@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Fiap.Stack.BLL.Interfaces;
 using Fiap.Stack.Models;
 using Fiap.Stack.MOD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,7 @@ namespace Fiap.Stack.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CadastrarRespostaAsync(RespostaModel resposta)
         {
             try

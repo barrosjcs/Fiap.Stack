@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Fiap.Stack.BLL.Interfaces;
 using Fiap.Stack.DAL.Interfaces;
 using Fiap.Stack.MOD;

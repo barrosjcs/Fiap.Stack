@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Fiap.Stack.MOD;
+﻿using Fiap.Stack.MOD;
 
 namespace Fiap.Stack.Models
 {

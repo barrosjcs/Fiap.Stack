@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Fiap.Stack.BLL.Interfaces;
 using Fiap.Stack.DAL.Interfaces;
