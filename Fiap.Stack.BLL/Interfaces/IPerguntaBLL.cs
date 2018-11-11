@@ -8,5 +8,6 @@ namespace Fiap.Stack.BLL.Interfaces
     {
         Task<PerguntaMOD> CadastrarPerguntaAsync(PerguntaMOD pergunta, IEnumerable<int> codigosTag);
         Task<IEnumerable<PerguntaMOD>> RetornarPerguntasRecentesAsync();
+        Task<PerguntaMOD> RetornarPerguntaPorCodigoAsync(int codigo);
     }
 }

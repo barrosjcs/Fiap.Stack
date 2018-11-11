@@ -10,5 +10,6 @@ namespace Fiap.Stack.DAL.Interfaces
         Task CadastrarPerguntaTagAsync(int codigoPergunta, int codigoTag);
         Task<PerguntaMOD> BuscarPerguntaAsync(int codigoPergunta);
         Task<IEnumerable<PerguntaMOD>> BuscarPerguntasRecentesAsync();
+        Task<PerguntaMOD> RetornarPerguntaPorCodigoAsync(int codigo);
     }
 }

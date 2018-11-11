@@ -24,6 +24,7 @@ namespace Fiap.Stack.DAL
                                 SELECT
                                 	Codigo,
                                 	CodigoPergunta,
+                                    CodigoUsuario,
                                 	Descricao,
                                 	Votos,
                                 	DataHoraCadastro
@@ -43,9 +44,9 @@ namespace Fiap.Stack.DAL
                 const string insert = @"
                                 INSERT INTO
                                 	Resposta
-                                		(CodigoPergunta, Descricao, Votos)
+                                		(CodigoPergunta, CodigoUsuario, Descricao, Votos)
                                 VALUES
-                                	(@CodigoPergunta, @Descricao, 0)
+                                	(@CodigoPergunta, @CodigoUsuario, @Descricao, @Votos)
 
                                 SELECT @@IDENTITY";
 

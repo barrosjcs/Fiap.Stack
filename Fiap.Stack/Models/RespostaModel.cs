@@ -8,6 +8,7 @@ namespace Fiap.Stack.Models
     {
         public int Codigo { get; set; }
         public int CodigoPergunta { get; set; }
+        public int CodigoUsuario { get; set; }
         public int Votos { get; set; }
         public DateTime DataHoraCadastro { get; set; }
 
@@ -19,6 +20,7 @@ namespace Fiap.Stack.Models
             return new RespostaMOD
             {
                 Codigo = resposta.Codigo,
+                CodigoUsuario = resposta.CodigoUsuario,
                 CodigoPergunta = resposta.CodigoPergunta,
                 Votos = resposta.Votos,
                 Descricao = resposta.Descricao

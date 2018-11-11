@@ -42,13 +42,28 @@ namespace Fiap.Stack.Controllers
         }
 
         [HttpGet]
-        [Route("Recente")]
         [AllowAnonymous]
+        [Route("Recente")]
         public async Task<IActionResult> RetornarPerguntasRecentesAsync()
         {
             try
             {
                 return Ok(await _perguntaBll.RetornarPerguntasRecentesAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new RetornoModel(Mensagem.ErroPadrao));
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("{codigo}")]
+        public async Task<IActionResult> RetornarPerguntaPorCodigoAsync(int codigo)
+        {
+            try
+            {
+                return Ok(await _perguntaBll.RetornarPerguntaPorCodigoAsync(codigo));
             }
             catch (Exception)
             {

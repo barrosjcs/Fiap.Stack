@@ -85,7 +85,7 @@ namespace Fiap.Stack.DAL
                             lookup.Add(perguntaEntry.Codigo, perguntaEntry);
                         }
 
-                        if(tag != null)
+                        if (tag != null)
                             perguntaEntry.Tags.Add(tag);
 
                         return perguntaEntry;
@@ -105,7 +105,7 @@ namespace Fiap.Stack.DAL
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Local")))
             {
                 const string query = @"
-                                SELECT TOP 5
+                                SELECT TOP 10
                                     Pergunta.Codigo,
                                     Pergunta.CodigoUsuario,
                                     Pergunta.Titulo,
@@ -126,6 +126,63 @@ namespace Fiap.Stack.DAL
                         return pergunta;
                     },
                     splitOn: "Codigo");
+            }
+        }
+
+        public async Task<PerguntaMOD> RetornarPerguntaPorCodigoAsync(int codigo)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("Local")))
+            {
+                const string query = @"
+                                SELECT
+                                	Pergunta.Codigo,
+                                	Pergunta.Titulo,
+                                	Pergunta.Descricao,
+                                	Pergunta.DataHoraCadastro,
+                                	UsuarioPergunta.Codigo,
+                                	UsuarioPergunta.Nome,
+                                	Resposta.Codigo,
+                                	Resposta.Descricao,
+                                	Resposta.Votos,
+                                	Resposta.DataHoraCadastro,
+                                	UsuarioResposta.Codigo,
+                                	UsuarioResposta.Nome
+                                FROM
+                                	Pergunta
+                                	INNER JOIN Usuario AS UsuarioPergunta ON Pergunta.CodigoUsuario = UsuarioPergunta.Codigo
+                                	LEFT JOIN Resposta ON Pergunta.Codigo = Resposta.CodigoPergunta
+                                	LEFT JOIN Usuario AS UsuarioResposta ON Resposta.CodigoUsuario = UsuarioResposta.Codigo
+                                WHERE
+                                	Pergunta.Codigo = @Codigo";
+
+                var lookup = new Dictionary<int, PerguntaMOD>();
+                var lista = await connection
+                    .QueryAsync<PerguntaMOD, UsuarioMOD, RespostaMOD, UsuarioMOD, PerguntaMOD>(query,
+                    (pergunta, usuarioPergunta, resposta, usuarioResposta) =>
+                    {
+                        if (!lookup.TryGetValue(pergunta.Codigo, out PerguntaMOD perguntaEntry))
+                        {
+                            perguntaEntry = pergunta;
+                            perguntaEntry.Usuario = usuarioPergunta;
+                            perguntaEntry.Respostas = new List<RespostaMOD>();
+                            lookup.Add(perguntaEntry.Codigo, perguntaEntry);
+                        }
+
+                        if (resposta != null)
+                        {
+                            resposta.Usuario = usuarioResposta;
+                            perguntaEntry.Respostas.Add(resposta);
+                        }
+
+                        return perguntaEntry;
+                    },
+                    new
+                    {
+                        Codigo = codigo
+                    },
+                    splitOn: "Codigo,Codigo,Codigo");
+
+                return lista.FirstOrDefault();
             }
         }
     }

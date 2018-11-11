@@ -12,6 +12,7 @@ namespace Fiap.Stack.MOD
         public DateTime DataHoraCadastro  { get; set; }
 
         public UsuarioMOD Usuario { get; set; }
+        public List<RespostaMOD> Respostas { get; set; }
         public List<TagMOD> Tags { get; set; }
     }
 }

@@ -29,6 +29,15 @@ namespace Fiap.Stack.BLL
             return await _perguntaDal.BuscarPerguntaAsync(codigoPergunta);
         }
 
+        public async Task<PerguntaMOD> RetornarPerguntaPorCodigoAsync(int codigo)
+        {
+            var pergunta = await _perguntaDal.RetornarPerguntaPorCodigoAsync(codigo);
+
+            pergunta.Tags = await _tagDal.BuscarTagsPorPerguntaAsync(pergunta.Codigo);
+
+            return pergunta;
+        }
+
         public async Task<IEnumerable<PerguntaMOD>> RetornarPerguntasRecentesAsync()
         {
             var perguntas = await _perguntaDal.BuscarPerguntasRecentesAsync();

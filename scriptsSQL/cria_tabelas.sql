@@ -34,10 +34,12 @@ CREATE TABLE Pergunta (
 CREATE TABLE Resposta (
 	Codigo INT PRIMARY KEY IDENTITY,
 	CodigoPergunta INT NOT NULL,
+	CodigoUsuario INT NOT NULL,
 	Descricao TEXT NOT NULL,
 	Votos INT NOT NULL DEFAULT 0,
 	DataHoraCadastro DATETIME NOT NULL DEFAULT GETDATE() 
-	FOREIGN KEY (CodigoPergunta) REFERENCES Pergunta (Codigo) 
+	FOREIGN KEY (CodigoPergunta) REFERENCES Pergunta (Codigo),
+	FOREIGN KEY (CodigoUsuario) REFERENCES Usuario (Codigo)
 )
 
 CREATE TABLE PerguntaTag (
