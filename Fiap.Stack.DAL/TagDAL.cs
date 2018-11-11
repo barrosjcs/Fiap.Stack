@@ -33,6 +33,24 @@ namespace Fiap.Stack.DAL
             }
         }
 
+        public async Task<List<TagMOD>> BuscarTagsPorPerguntaAsync(int codigoPergunta)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("Local")))
+            {
+                const string query = @"
+                                SELECT
+                                	Tag.Codigo,
+									Tag.Descricao
+                                FROM
+                                	Tag
+									INNER JOIN PerguntaTag ON Tag.Codigo = PerguntaTag.CodigoTag
+                                WHERE
+                                	PerguntaTag.CodigoPergunta = @CodigoPergunta";
+
+                return await connection.QueryAsync<TagMOD>(query, new { CodigoPergunta = codigoPergunta }) as List<TagMOD>;
+            }
+        }
+
         public async Task CadastrarTagAsync(TagMOD tag)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Local")))

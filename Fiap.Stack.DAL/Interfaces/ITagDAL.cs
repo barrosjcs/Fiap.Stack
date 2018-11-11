@@ -9,5 +9,6 @@ namespace Fiap.Stack.DAL.Interfaces
         Task CadastrarTagAsync(TagMOD tag);
         Task<bool> VerificarExisteTagAsync(string descricaoTag);
         Task<IEnumerable<int>> BuscarCodigosTagAsync(string[] descricoesTag);
+        Task<List<TagMOD>> BuscarTagsPorPerguntaAsync(int codigoPergunta);
     }
 }

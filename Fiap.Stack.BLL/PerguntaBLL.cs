@@ -9,10 +9,12 @@ namespace Fiap.Stack.BLL
     public class PerguntaBLL : IPerguntaBLL
     {
         private readonly IPerguntaDAL _perguntaDal;
+        private readonly ITagDAL _tagDal;
 
-        public PerguntaBLL(IPerguntaDAL perguntaDal)
+        public PerguntaBLL(IPerguntaDAL perguntaDal, ITagDAL tagDal)
         {
             _perguntaDal = perguntaDal;
+            _tagDal = tagDal;
         }
 
         public async Task<PerguntaMOD> CadastrarPerguntaAsync(PerguntaMOD pergunta, IEnumerable<int> codigosTag)
@@ -25,6 +27,18 @@ namespace Fiap.Stack.BLL
             }
 
             return await _perguntaDal.BuscarPerguntaAsync(codigoPergunta);
+        }
+
+        public async Task<IEnumerable<PerguntaMOD>> RetornarPerguntasRecentesAsync()
+        {
+            var perguntas = await _perguntaDal.BuscarPerguntasRecentesAsync();
+
+            foreach (var pergunta in perguntas)
+            {
+                pergunta.Tags = await _tagDal.BuscarTagsPorPerguntaAsync(pergunta.Codigo);
+            }
+
+            return perguntas;
         }
     }
 }

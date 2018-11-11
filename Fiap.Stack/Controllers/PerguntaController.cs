@@ -40,5 +40,20 @@ namespace Fiap.Stack.Controllers
                 return StatusCode(500, new RetornoModel(Mensagem.ErroPadrao));
             }
         }
+
+        [HttpGet]
+        [Route("Recente")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RetornarPerguntasRecentesAsync()
+        {
+            try
+            {
+                return Ok(await _perguntaBll.RetornarPerguntasRecentesAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new RetornoModel(Mensagem.ErroPadrao));
+            }
+        }
     }
 }

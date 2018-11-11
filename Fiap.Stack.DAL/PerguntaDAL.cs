@@ -84,10 +84,8 @@ namespace Fiap.Stack.DAL
                             lookup.Add(perguntaEntry.Codigo, perguntaEntry);
                         }
 
-                        if (tag != null)
-                        {
+                        if(tag != null)
                             perguntaEntry.Tags.Add(tag);
-                        }
 
                         return perguntaEntry;
                     },
@@ -95,9 +93,37 @@ namespace Fiap.Stack.DAL
                     {
                         Codigo = codigoPergunta
                     },
-                    splitOn:"Codigo");
+                    splitOn: "Codigo");
 
                 return lista.FirstOrDefault();
+            }
+        }
+
+        public async Task<IEnumerable<PerguntaMOD>> BuscarPerguntasRecentesAsync()
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("Local")))
+            {
+                const string query = @"
+                                SELECT TOP 5
+                                    Pergunta.Codigo,
+                                    Pergunta.CodigoUsuario,
+                                    Pergunta.Descricao,
+                                    Pergunta.DataHoraCadastro,
+                                	Usuario.Codigo,
+                                	Usuario.Nome
+                                FROM
+                                    Pergunta
+                                	INNER JOIN Usuario ON Pergunta.CodigoUsuario = Usuario.Codigo
+                                ORDER BY
+                                	DataHoraCadastro DESC";
+
+                return await connection.QueryAsync<PerguntaMOD, UsuarioMOD, PerguntaMOD>(query,
+                    (pergunta, usuario) =>
+                    {
+                        pergunta.Usuario = usuario;
+                        return pergunta;
+                    },
+                    splitOn: "Codigo");
             }
         }
     }

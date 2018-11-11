@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace Fiap.Stack
 {
@@ -28,8 +29,13 @@ namespace Fiap.Stack
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // MVC
+            services
+                .AddMvc()
+                .AddJsonOptions(c => c.SerializerSettings.NullValueHandling = NullValueHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            // Auth JWT
             var tokenSettings = new TokenSettings();
             new ConfigureFromConfigurationOptions<TokenSettings>(
                     Configuration.GetSection("TokenSettings")).Configure(tokenSettings);
@@ -55,7 +61,16 @@ namespace Fiap.Stack
                 };
             });
 
+            // Cors
+            services.AddCors(o => o.AddPolicy("CorsHabilitado", builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
 
+            // Injeções
             services.AddTransient<IPerguntaDAL, PerguntaDAL>();
             services.AddTransient<IPerguntaBLL, PerguntaBLL>();
             services.AddTransient<IRespostaDAL, RespostaDAL>();
@@ -77,6 +92,7 @@ namespace Fiap.Stack
                 app.UseHsts();
             }
 
+            app.UseCors("CorsHabilitado");
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();

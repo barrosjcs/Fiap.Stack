@@ -1,4 +1,5 @@
 ﻿using Fiap.Stack.MOD;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fiap.Stack.DAL.Interfaces
@@ -8,5 +9,6 @@ namespace Fiap.Stack.DAL.Interfaces
         Task<int> CadastrarPerguntaAsync(PerguntaMOD pergunta);
         Task CadastrarPerguntaTagAsync(int codigoPergunta, int codigoTag);
         Task<PerguntaMOD> BuscarPerguntaAsync(int codigoPergunta);
+        Task<IEnumerable<PerguntaMOD>> BuscarPerguntasRecentesAsync();
     }
 }
