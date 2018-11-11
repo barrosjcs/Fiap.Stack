@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fiap.Stack.DAL\Fiap.Stack.DAL.csproj" />
+    <ProjectReference Include="..\Fiap.Stack.MOD\Fiap.Stack.MOD.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Fiap.Stack.MOD
 {
@@ -8,5 +9,7 @@ namespace Fiap.Stack.MOD
         public int CodigoUsuario { get; set; }
         public string Descricao { get; set; }
         public DateTime DataHoraCadastro  { get; set; }
+
+        public List<TagMOD> Tags { get; set; }
     }
 }
