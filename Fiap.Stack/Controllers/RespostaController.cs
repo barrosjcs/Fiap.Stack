@@ -11,7 +11,8 @@ using System.Linq;
 namespace Fiap.Stack.Controllers
 {
     [ApiController]
-    [Route("api/v1/[Controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{apiVersion}/[Controller]")]
     public class RespostaController : ControllerBase
     {
         private readonly IRespostaBLL _respostaBll;

@@ -15,7 +15,8 @@ namespace Fiap.Stack.Controllers
 {
     [ApiController]
     [AllowAnonymous]
-    [Route("api/v1/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{apiVersion}/[Controller]")]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioBLL _usuarioBll;
