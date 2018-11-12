@@ -1,3 +1,4 @@
+CREATE DATABASE FIAP
 
 --DROP TABLE PerguntaTag
 --DROP TABLE Resposta
