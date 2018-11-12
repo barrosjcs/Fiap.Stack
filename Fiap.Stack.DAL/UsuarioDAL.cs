@@ -16,6 +16,22 @@ namespace Fiap.Stack.DAL
             _configuration = configuration;
         }
 
+        public async Task<int> BuscarCodigoUsuario(string login)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("Local")))
+            {
+                const string query = @"
+                                SELECT
+                                	Codigo
+                                FROM
+                                	Usuario
+                                WHERE
+                                	Login = @Login";
+
+                return await connection.QueryFirstOrDefaultAsync<int>(query, new { Login = login });
+            }
+        }
+
         public async Task<UsuarioMOD> BuscarUsuarioAsync(string login)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Local")))

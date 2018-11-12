@@ -5,6 +5,8 @@ using Fiap.Stack.Models;
 using Fiap.Stack.MOD;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Linq;
 
 namespace Fiap.Stack.Controllers
 {
@@ -13,10 +15,12 @@ namespace Fiap.Stack.Controllers
     public class RespostaController : ControllerBase
     {
         private readonly IRespostaBLL _respostaBll;
+        private readonly IUsuarioBLL _usuarioBll;
 
-        public RespostaController(IRespostaBLL respostaBll)
+        public RespostaController(IRespostaBLL respostaBll, IUsuarioBLL usuarioBll)
         {
             _respostaBll = respostaBll;
+            _usuarioBll = usuarioBll;
         }
 
         [HttpPost]
@@ -25,6 +29,9 @@ namespace Fiap.Stack.Controllers
         {
             try
             {
+                var login = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+                resposta.CodigoUsuario = await _usuarioBll.RetornarCodigoUsuario(login);
+
                 return Created(Request.Host.ToUriComponent(),
                     await _respostaBll.CadastrarRespostaAsync((RespostaMOD) resposta));
             }

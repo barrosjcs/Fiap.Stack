@@ -34,5 +34,10 @@ namespace Fiap.Stack.BLL
 
             return await _usuarioDal.BuscarUsuarioAsync(codigoUsuario);
         }
+
+        public async Task<int> RetornarCodigoUsuario(string login)
+        {
+            return await _usuarioDal.BuscarCodigoUsuario(login);
+        }
     }
 }

@@ -26,7 +26,6 @@ namespace Fiap.Stack.Controllers
         }
 
         [HttpPost]
-        [Route("Cadastro")]
         public async Task<IActionResult> CadastrarUsuarioAsync(UsuarioModel usuario)
         {
             try
@@ -42,7 +41,7 @@ namespace Fiap.Stack.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> AutenticarUsuarioAsync(UsuarioModel usuario, [FromServices] TokenSettings tokenSettings)
+        public async Task<IActionResult> AutenticarUsuarioAsync(LoginModel usuario, [FromServices] TokenSettings tokenSettings)
         {
             try
             {
@@ -64,7 +63,7 @@ namespace Fiap.Stack.Controllers
         {
             var claims = new Claim[]
             {
-                new Claim(ClaimTypes.Name, userName),
+                new Claim(JwtRegisteredClaimNames.NameId, userName),
                 new Claim(JwtRegisteredClaimNames.Iss, tokenSettings.Issuer),
                 new Claim(JwtRegisteredClaimNames.Aud, tokenSettings.Audience),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),

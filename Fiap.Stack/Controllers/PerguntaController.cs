@@ -6,6 +6,7 @@ using Fiap.Stack.Models;
 using Fiap.Stack.MOD;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Fiap.Stack.Controllers
 {
@@ -15,11 +16,13 @@ namespace Fiap.Stack.Controllers
     {
         private readonly ITagBLL _tagBll;
         private readonly IPerguntaBLL _perguntaBll;
+        private readonly IUsuarioBLL _usuarioBll;
 
-        public PerguntaController(ITagBLL tagBll, IPerguntaBLL perguntaBll)
+        public PerguntaController(ITagBLL tagBll, IPerguntaBLL perguntaBll, IUsuarioBLL usuarioBll)
         {
             _tagBll = tagBll;
             _perguntaBll = perguntaBll;
+            _usuarioBll = usuarioBll;
         }
 
         [HttpPost]
@@ -31,6 +34,9 @@ namespace Fiap.Stack.Controllers
                 var tagsMod = pergunta.Tags.Select(c => (TagMOD)c);
                 await _tagBll.CadastarTagsAsync(tagsMod);
                 var codigosTag = await _tagBll.RetornarCodigosTagAsync(tagsMod);
+
+                var login = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+                pergunta.CodigoUsuario = await _usuarioBll.RetornarCodigoUsuario(login);
 
                 return Created(Request.Host.ToUriComponent(),
                     await _perguntaBll.CadastrarPerguntaAsync((PerguntaMOD)pergunta, codigosTag));
