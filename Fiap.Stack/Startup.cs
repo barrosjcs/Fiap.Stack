@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -70,6 +71,10 @@ namespace Fiap.Stack
                     .AllowAnyHeader();
             }));
 
+            // Gzip
+            services.Configure<GzipCompressionProviderOptions>(c => c.Level = System.IO.Compression.CompressionLevel.Fastest);
+            services.AddResponseCompression(c => c.Providers.Add<GzipCompressionProvider>());
+
             // Injeções
             services.AddTransient<IPerguntaDAL, PerguntaDAL>();
             services.AddTransient<IPerguntaBLL, PerguntaBLL>();
@@ -94,6 +99,7 @@ namespace Fiap.Stack
 
             app.UseCors("CorsHabilitado");
             app.UseAuthentication();
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
